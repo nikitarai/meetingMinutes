@@ -16,6 +16,7 @@ namespace MeetingMinutesProject
 
             Menu();
 
+
         }
 
         static void Header()
@@ -26,18 +27,18 @@ namespace MeetingMinutesProject
         static void Meeting()
         {
             Spacer();
-            
+
 
             Console.WriteLine("Enter Team Member Recording Meeting Minutes: ");
             string minuteRecorder = Console.ReadLine();
-            
+
             Spacer();
             Console.WriteLine("Enter Team Member Leading Meeting: ");
             string meetingLeader = Console.ReadLine();
             Spacer();
             Console.WriteLine("Enter Date of Team Meeting (Enter Date in \"MMDDYY\" format): ");
             string meetingDate = Console.ReadLine();
-            string meetingName = ("Minutes" + meetingDate );
+            string meetingName = ("Minutes" + meetingDate);
 
             //meeting list
             List<string> meetingType = new List<string>();
@@ -78,76 +79,17 @@ namespace MeetingMinutesProject
                     meetType = meetingType[4];
                     break;
                 case 6:
-                    meetType =meetingType[5];
+                    meetType = meetingType[5];
                     break;
                 default:
                     break;
             }
 
-          
+
             string topAnswer = "N";
-            string meetingTopic;
-            string meetingNotes;
+            List<string> meetingTopic = new List<string>();
+            List<string> meetingNotes = new List<string>();
             string txtName = meetingName + ".txt";
-            
-           
-
-                do
-            {
-                Console.WriteLine("Enter Meeting Topic: ");
-                meetingTopic = Console.ReadLine();
-                
-                Spacer();
-                Console.WriteLine("Enter Meeting Notes for {0}: ", meetingTopic);
-                meetingNotes = Console.ReadLine();
-                Spacer();
-
-                
-
-                Console.WriteLine("Would you like to enter notes for another topic? (\"Y\" or \"N\") ");
-                topAnswer = Console.ReadLine().ToUpper();
-                Spacer();
-                
-                if (topAnswer == "N")
-                {
-                    
-                    Spacer();
-                    Console.WriteLine("Recorder: " +minuteRecorder);
-                    Console.WriteLine("Leader: " +meetingLeader);                    
-                    Console.WriteLine("Meeting Type: " +meetType);
-                    Spacer();
-                    Console.WriteLine("Meeting Topic: " + meetingTopic);
-                    Console.WriteLine("Meeting Notes: " + meetingNotes);
-                    Spacer2();
-
-                    Console.WriteLine("Enter number from options below");
-                    Console.WriteLine("1 | Main Menu");
-                    Console.WriteLine("2 | Exit");
-                    int ender = int.Parse(Console.ReadLine());
-
-                    if (ender == 1)
-                    {
-                        Console.Clear();
-                        Header();
-                        Spacer();
-                        Menu();
-                    }
-                    else if (ender == 2)
-                    {
-                        Spacer();
-                        Console.WriteLine("Goodbye");                    
-                    }
-                
-
-
-                  
-                }
-                else if (topAnswer == "Y")
-                {
-                   
-                }
-            }
-            while (topAnswer == "Y");
 
             StreamWriter write = new StreamWriter(txtName);
 
@@ -159,25 +101,65 @@ namespace MeetingMinutesProject
 
                 write.WriteLine("Meeting Minutes");
                 write.WriteLine("\r\n");
-           
-            
+
+
                 write.WriteLine("Recorder: " + minuteRecorder);
                 write.WriteLine("Leader: " + meetingLeader);
 
                 write.WriteLine("Meeting Type: " + meetType);
                 write.WriteLine("\r\n");
 
-                write.WriteLine("Meeting Topic: " + meetingTopic);
-                write.WriteLine("Meeting Notes: " + meetingNotes);
-                write.WriteLine("\r\n");
+                int counter = 0;
+                do
+                {
+                    Console.WriteLine("Enter Meeting Topic: ");
+                    meetingTopic.Add(Console.ReadLine());
+                    write.WriteLine("Meeting Topic: " + meetingTopic[counter]);
+
+                    Console.WriteLine("Enter Meeting Notes for {0}: ", meetingTopic[counter]);
+                    meetingNotes.Add(Console.ReadLine());
+                    write.WriteLine("Meeting Notes: " + meetingNotes[counter]);
+                    Spacer();
+
+                    counter++;
+
+                    Console.WriteLine("Would you like to enter notes for another topic? (\"Y\" or \"N\") ");
+                    topAnswer = Console.ReadLine().ToUpper();
+                    Spacer();
+
+                } while (topAnswer == "Y");
+            }
+
+            StreamReader reader = new StreamReader(txtName);
+            using (reader)
+            {
+
+                Console.WriteLine(reader.ReadToEnd());
+            }
+
+            Console.WriteLine("Enter number from options below");
+            Console.WriteLine("1 | Main Menu");
+            Console.WriteLine("2 | Exit");
+            int ender = int.Parse(Console.ReadLine());
+
+            if (ender == 1)
+            {
+                Console.Clear();
+                Header();
+                Spacer();
+                Menu();
+            }
+            else if (ender == 2)
+            {
+                Spacer();
+                Console.WriteLine("Goodbye");
             }
 
         }
 
-
         static void TeamMembers()
         {
-            
+
             Console.WriteLine("View Team");
             Console.WriteLine("Choose a team from the options below");
             Spacer();
@@ -191,7 +173,7 @@ namespace MeetingMinutesProject
             int teamOptions = int.Parse(Console.ReadLine());
             Spacer2();
 
-            
+
             Dictionary<string, string> members = new Dictionary<string, string>();
             members.Add("Penelope Santos", "Marketing");
             members.Add("Janet Smith", "Marketing");
@@ -208,8 +190,6 @@ namespace MeetingMinutesProject
             members.Add("Anthony Hill", "Production");
             members.Add("Marcus Payne", "Production");
             members.Add("Matthew Colby", "Production");
-          
-
 
             switch (teamOptions)
             {
@@ -222,7 +202,7 @@ namespace MeetingMinutesProject
                         if (member.Value == "Development")
                         {
                             Console.WriteLine(member.Key);
-                        }                      
+                        }
                     }
                     Spacer2();
                     break;
@@ -235,7 +215,7 @@ namespace MeetingMinutesProject
                         if (member.Value == "Marketing")
                         {
                             Console.WriteLine(member.Key);
-                        }                      
+                        }
                     }
                     Spacer2();
                     break;
@@ -247,7 +227,7 @@ namespace MeetingMinutesProject
                         if (member.Value == "Production")
                         {
                             Console.WriteLine(member.Key);
-                        }                      
+                        }
                     }
                     Spacer2();
                     break;
@@ -259,7 +239,7 @@ namespace MeetingMinutesProject
                         if (member.Value == "Distribution")
                         {
                             Console.WriteLine(member.Key);
-                        }                      
+                        }
                     }
                     Spacer2();
                     break;
@@ -271,7 +251,7 @@ namespace MeetingMinutesProject
                         if (member.Value == "Legal")
                         {
                             Console.WriteLine(member.Key);
-                        }                       
+                        }
                     }
                     Spacer2();
                     break;
@@ -281,7 +261,7 @@ namespace MeetingMinutesProject
 
                     foreach (KeyValuePair<string, string> member in members)
                     {
-                        Console.WriteLine(member.Key + " (" +member.Value + ")");
+                        Console.WriteLine(member.Key + " (" + member.Value + ")");
                     }
                     Spacer2();
                     break;
@@ -313,10 +293,9 @@ namespace MeetingMinutesProject
 
         }
 
-       
         static void Menu()
         {
-            
+
             Console.WriteLine("Menu");
             Console.WriteLine("Choose a number from the options below.");
             Spacer();
@@ -349,7 +328,6 @@ namespace MeetingMinutesProject
                     break;
             }
 
-            
         }
 
         static void Spacer()
@@ -370,6 +348,4 @@ namespace MeetingMinutesProject
             Console.WriteLine();
         }
     }
-
-    
 }
